@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch-a-Sketch</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Etch-a-Sketch</h1>
+            <p class="subtitle">Draw your masterpiece! The Odin Project</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Left Panel - Controls -->
+            <div class="controls-panel">
+                <h2><i class="fas fa-palette"></i> Color Mode</h2>
+                <div class="color-options">
+                    <button class="color-btn" id="black-btn">
+                        <span class="color-dot black-dot"></span>
+                        Black
+                    </button>
+                    <button class="color-btn active" id="rainbow-btn">
+                        <span class="color-dot rainbow-dot"></span>
+                        Rainbow
+                    </button>
+                    <button class="color-btn" id="eraser-btn">
+                        <span class="color-dot eraser-dot"></span>
+                        Eraser
+                    </button>
+                </div>
+
+                <div class="custom-color">
+                    <label for="color-picker">Custom Color:</label>
+                    <input type="color" id="color-picker" value="#ff0000">
+                </div>
+
+                <h2><i class="fas fa-th"></i> Grid Settings</h2>
+                <div class="grid-controls">
+                    <div class="slider-container">
+                        <label>Grid Size: <span id="grid-size-value">12 x 12</span></label>
+                        <input type="range" id="grid-size-slider" min="4" max="32" value="12" step="4">
+                    </div>
+                    <div class="toggle-container">
+                        <label>Show Grid Lines</label>
+                        <label class="switch">
+                            <input type="checkbox" id="grid-lines-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <h2><i class="fas fa-paint-brush"></i> Drawing Tools</h2>
+                <div class="tools">
+                    <button class="tool-btn" id="clear-btn">
+                        <i class="fas fa-broom"></i> Clear Grid
+                    </button>
+                    <button class="tool-btn" id="reset-btn">
+                        <i class="fas fa-redo"></i> Reset All
+                    </button>
+                </div>
+
+                <div class="instructions">
+                    <h2><i class="fas fa-info-circle"></i> How to Use</h2>
+                    <ul>
+                        <li>Click and drag to draw</li>
+                        <li>Choose a color mode</li>
+                        <li>Adjust grid size as needed</li>
+                        <li>Toggle grid lines on/off</li>
+                        <li>Use eraser to remove color</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Panel - Canvas -->
+            <div class="canvas-panel">
+                <div class="canvas-header">
+                    <h2><i class="fas fa-draw-polygon"></i> Drawing Canvas</h2>
+                    <div class="canvas-info">
+                        <span id="current-mode">Current: Rainbow</span>
+                        <span id="pixel-count">Pixels: 0/144</span>
+                    </div>
+                </div>
+                <div class="canvas-frame">
+                    <div id="drawing-grid"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                <i class="fas fa-code"></i> Built for The Odin Project 
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-laptop-code"></i>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
