@@ -3,103 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etch-a-Sketch</title>
+    <title>Pixel Canvas | Etch-a-Sketch</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <h1>Etch-a-Sketch</h1>
-            <p class="subtitle">Draw your masterpiece! The Odin Project</p>
-        </header>
+    <div class="app-container">
+        <!-- Floating Navigation -->
+        <nav class="floating-nav">
+            <div class="nav-brand">
+                <i class="fas fa-palette"></i>
+                <span>PixelCanvas</span>
+            </div>
+            <div class="nav-stats">
+                <div class="stat-item">
+                    <i class="fas fa-brush"></i>
+                    <span id="brush-size-display">3px</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-th"></i>
+                    <span id="grid-size-display">16×16</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span id="fps-display">60 FPS</span>
+                </div>
+            </div>
+            <button class="nav-cta" id="save-art">
+                <i class="fas fa-download"></i>
+                <span>Save Art</span>
+            </button>
+        </nav>
 
-        <main class="main-content">
-            <!-- Left Panel - Controls -->
-            <div class="controls-panel">
-                <h2><i class="fas fa-palette"></i> Color Mode</h2>
-                <div class="color-options">
-                    <button class="color-btn" id="black-btn">
-                        <span class="color-dot black-dot"></span>
-                        Black
-                    </button>
-                    <button class="color-btn active" id="rainbow-btn">
-                        <span class="color-dot rainbow-dot"></span>
-                        Rainbow
-                    </button>
-                    <button class="color-btn" id="eraser-btn">
-                        <span class="color-dot eraser-dot"></span>
-                        Eraser
-                    </button>
+        <!-- Main Content -->
+        <main class="main-grid">
+            <!-- Left Sidebar - Tools -->
+            <aside class="tool-sidebar">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-magic"></i> Creative Tools</h3>
+                    <p class="sidebar-subtitle">Shape your imagination</p>
                 </div>
 
-                <div class="custom-color">
-                    <label for="color-picker">Custom Color:</label>
-                    <input type="color" id="color-picker" value="#ff0000">
-                </div>
-
-                <h2><i class="fas fa-th"></i> Grid Settings</h2>
-                <div class="grid-controls">
-                    <div class="slider-container">
-                        <label>Grid Size: <span id="grid-size-value">12 x 12</span></label>
-                        <input type="range" id="grid-size-slider" min="4" max="32" value="12" step="4">
+                <!-- Drawing Modes -->
+                <div class="tool-section glass-effect">
+                    <h4><i class="fas fa-paint-brush"></i> Drawing Mode</h4>
+                    <div class="mode-selector">
+                        <button class="mode-btn active" data-mode="freehand">
+                            <i class="fas fa-hand-paper"></i>
+                            <span>Freehand</span>
+                        </button>
+                        <button class="mode-btn" data-mode="shapes">
+                            <i class="fas fa-shapes"></i>
+                            <span>Shapes</span>
+                        </button>
+                        <button class="mode-btn" data-mode="fill">
+                            <i class="fas fa-fill-drip"></i>
+                            <span>Fill</span>
+                        </button>
                     </div>
-                    <div class="toggle-container">
-                        <label>Show Grid Lines</label>
-                        <label class="switch">
-                            <input type="checkbox" id="grid-lines-toggle" checked>
-                            <span class="slider"></span>
+                </div>
+
+                <!-- Color Palette -->
+                <div class="tool-section glass-effect">
+                    <h4><i class="fas fa-palette"></i> Color Palette</h4>
+                    <div class="color-grid">
+                        <div class="color-circle active" style="background: #FF6B6B;" data-color="#FF6B6B"></div>
+                        <div class="color-circle" style="background: #4ECDC4;" data-color="#4ECDC4"></div>
+                        <div class="color-circle" style="background: #FFD166;" data-color="#FFD166"></div>
+                        <div class="color-circle" style="background: #06D6A0;" data-color="#06D6A0"></div>
+                        <div class="color-circle" style="background: #118AB2;" data-color="#118AB2"></div>
+                        <div class="color-circle" style="background: #073B4C;" data-color="#073B4C"></div>
+                        <div class="color-circle" style="background: #7209B7;" data-color="#7209B7"></div>
+                        <div class="color-circle" style="background: #F72585;" data-color="#F72585"></div>
+                    </div>
+                    
+                    <div class="custom-color-picker">
+                        <input type="color" id="custom-color" value="#3498db">
+                        <label for="custom-color">Custom Color</label>
+                    </div>
+
+                    <div class="color-modes">
+                        <button class="color-mode-btn active" data-mode="solid">
+                            <i class="fas fa-circle"></i>
+                            <span>Solid</span>
+                        </button>
+                        <button class="color-mode-btn" data-mode="rainbow">
+                            <i class="fas fa-rainbow"></i>
+                            <span>Rainbow</span>
+                        </button>
+                        <button class="color-mode-btn" data-mode="gradient">
+                            <i class="fas fa-gradient"></i>
+                            <span>Gradient</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Brush Settings -->
+                <div class="tool-section glass-effect">
+                    <h4><i class="fas fa-sliders-h"></i> Brush Settings</h4>
+                    <div class="slider-container">
+                        <label>Brush Size</label>
+                        <div class="slider-with-value">
+                            <input type="range" id="brush-size" min="1" max="20" value="3">
+                            <span class="value-display" id="brush-value">3px</span>
+                        </div>
+                    </div>
+                    <div class="slider-container">
+                        <label>Brush Opacity</label>
+                        <div class="slider-with-value">
+                            <input type="range" id="opacity-slider" min="10" max="100" value="100">
+                            <span class="value-display" id="opacity-value">100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grid Settings -->
+                <div class="tool-section glass-effect">
+                    <h4><i class="fas fa-th"></i> Grid Settings</h4>
+                    <div class="grid-presets">
+                        <button class="grid-preset active" data-size="16">16×16</button>
+                        <button class="grid-preset" data-size="24">24×24</button>
+                        <button class="grid-preset" data-size="32">32×32</button>
+                        <button class="grid-preset" data-size="48">48×48</button>
+                    </div>
+                    
+                    <div class="toggle-group">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="grid-toggle" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Show Grid</span>
+                        </label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="snap-toggle">
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Snap to Grid</span>
                         </label>
                     </div>
                 </div>
 
-                <h2><i class="fas fa-paint-brush"></i> Drawing Tools</h2>
-                <div class="tools">
-                    <button class="tool-btn" id="clear-btn">
-                        <i class="fas fa-broom"></i> Clear Grid
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="action-btn primary" id="clear-canvas">
+                        <i class="fas fa-eraser"></i>
+                        <span>Clear Canvas</span>
                     </button>
-                    <button class="tool-btn" id="reset-btn">
-                        <i class="fas fa-redo"></i> Reset All
+                    <button class="action-btn secondary" id="undo-action">
+                        <i class="fas fa-undo"></i>
+                        <span>Undo</span>
+                    </button>
+                    <button class="action-btn secondary" id="redo-action">
+                        <i class="fas fa-redo"></i>
+                        <span>Redo</span>
                     </button>
                 </div>
+            </aside>
 
-                <div class="instructions">
-                    <h2><i class="fas fa-info-circle"></i> How to Use</h2>
-                    <ul>
-                        <li>Click and drag to draw</li>
-                        <li>Choose a color mode</li>
-                        <li>Adjust grid size as needed</li>
-                        <li>Toggle grid lines on/off</li>
-                        <li>Use eraser to remove color</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Right Panel - Canvas -->
-            <div class="canvas-panel">
-                <div class="canvas-header">
-                    <h2><i class="fas fa-draw-polygon"></i> Drawing Canvas</h2>
-                    <div class="canvas-info">
-                        <span id="current-mode">Current: Rainbow</span>
-                        <span id="pixel-count">Pixels: 0/144</span>
+            <!-- Canvas Area -->
+            <section class="canvas-area">
+                <div class="canvas-container glass-effect">
+                    <div class="canvas-header">
+                        <h3><i class="fas fa-drafting-compass"></i> Drawing Canvas</h3>
+                        <div class="canvas-controls">
+                            <button class="control-btn" id="zoom-in">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <span class="zoom-level">100%</span>
+                            <button class="control-btn" id="zoom-out">
+                                <i class="fas fa-search-minus"></i>
+                            </button>
+                            <button class="control-btn" id="reset-view">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="canvas-wrapper">
+                        <canvas id="drawing-canvas" width="800" height="800"></canvas>
+                        <canvas id="grid-canvas" width="800" height="800"></canvas>
+                        <div class="canvas-overlay">
+                            <div class="coordinates" id="coordinates">X: 0, Y: 0</div>
+                            <div class="hint">Click & drag to draw • Press Space to pan</div>
+                        </div>
+                    </div>
+                    
+                    <div class="canvas-footer">
+                        <div class="color-preview">
+                            <div class="current-color" id="current-color-preview"></div>
+                            <span class="color-code" id="current-color-code">#FF6B6B</span>
+                        </div>
+                        <div class="pixel-counter">
+                            <i class="fas fa-th-large"></i>
+                            <span id="pixel-count">0/256 pixels drawn</span>
+                        </div>
                     </div>
                 </div>
-                <div class="canvas-frame">
-                    <div id="drawing-grid"></div>
+            </section>
+
+            <!-- Right Sidebar - Advanced -->
+            <aside class="advanced-sidebar">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-star"></i> Advanced Tools</h3>
+                    <p class="sidebar-subtitle">Elevate your art</p>
                 </div>
-            </div>
+
+                <!-- Effects -->
+                <div class="tool-section glass-effect">
+                    <h4><i class="fas fa-wand-magic-sparkles"></i> Effects</h4>
+                    <div class="effects-grid">
+                        <button class="effect-btn" data-effect="blur">
+                            <i class="fas fa-blur"></i>
+                            <span>Blur</span>
+                        </button>
+                        <button class="effect-btn" data-effect="sharpen">
+                            <i class="fas fa-bolt"></i>
+                            <span>Sharpen</span>
+                        </button>
+                        <button class="effect-btn" data-effect="invert">
+                            <i class="fas fa-inverse"></i>
+                            <span>Invert</span>
+                        </button>
+                        <button class="effect-btn" data-effect="grayscale">
+                            <i class="fas fa-circle-half-stroke"></i>
+                            <span>Grayscale</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Color History -->
+                <div class="tool-section glass-effect">
+                    <h4><i class="fas fa-history"></i> Recent Colors</h4>
+                    <div class="history-colors" id="color-history">
+                        <!-- Color history will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Layers -->
+                <div class="tool-section glass-effect">
+                    <h4><i class="fas fa-layer-group"></i> Layers</h4>
+                    <div class="layers-list">
+                        <div class="layer-item active">
+                            <div class="layer-info">
+                                <div class="layer-color" style="background: #FF6B6B;"></div>
+                                <span>Background</span>
+                            </div>
+                            <div class="layer-controls">
+                                <i class="fas fa-eye"></i>
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-layer-btn" id="add-layer">
+                        <i class="fas fa-plus"></i>
+                        Add New Layer
+                    </button>
+                </div>
+
+                <!-- Export Options -->
+                <div class="tool-section glass-effect">
+                    <h4><i class="fas fa-share"></i> Export</h4>
+                    <div class="export-options">
+                        <button class="export-btn">
+                            <i class="fas fa-file-image"></i>
+                            <span>PNG</span>
+                        </button>
+                        <button class="export-btn">
+                            <i class="fas fa-file-code"></i>
+                            <span>SVG</span>
+                        </button>
+                        <button class="export-btn">
+                            <i class="fas fa-file-export"></i>
+                            <span>JSON</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-section glass-effect">
+                    <h4><i class="fas fa-chart-line"></i> Statistics</h4>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="stat-value" id="session-time">00:00</span>
+                                <span class="stat-label">Session</span>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <i class="fas fa-mouse-pointer"></i>
+                            <div>
+                                <span class="stat-value" id="brush-strokes">0</span>
+                                <span class="stat-label">Strokes</span>
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <i class="fas fa-memory"></i>
+                            <div>
+                                <span class="stat-value" id="memory-usage">--</span>
+                                <span class="stat-label">Memory</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </main>
 
-        <!-- Footer -->
-        <footer>
-            <p>
-                <i class="fas fa-code"></i> Built for The Odin Project 
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-laptop-code"></i>
-            </p>
+        <!-- Bottom Bar -->
+        <footer class="bottom-bar">
+            <div class="footer-content">
+                <div class="project-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>B.Tech Computer Graphics Project • Pixel Canvas v2.0</span>
+                </div>
+                <div class="social-links">
+                    <button class="social-btn">
+                        <i class="fas fa-share-alt"></i>
+                        Share
+                    </button>
+                    <button class="social-btn">
+                        <i class="fas fa-question-circle"></i>
+                        Help
+                    </button>
+                    <button class="social-btn">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </button>
+                </div>
+            </div>
         </footer>
+
+        <!-- Floating Color Picker -->
+        <div class="floating-color-picker" id="floating-picker">
+            <div class="picker-header">
+                <span>Color Picker</span>
+                <button class="close-picker">&times;</button>
+            </div>
+            <input type="color" id="floating-color-input" value="#3498db">
+        </div>
     </div>
 
     <script src="script.js"></script>
