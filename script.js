@@ -10,7 +10,7 @@ class PixelCanvas {
         this.setupEventListeners();
         this.startAnimationLoop();
     }
-
+    
     init() {
         // Canvas setup
         this.canvas = document.getElementById('drawing-canvas');
